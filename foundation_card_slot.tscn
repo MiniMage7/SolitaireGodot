@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://c3pd2hm36g02i"]
+
+[ext_resource type="Texture2D" uid="uid://bsadj0k420k4o" path="res://assets/card_outline.png" id="1_w43rp"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pubuk"]
+size = Vector2(140, 181)
+
+[node name="FoundationCardSlot" type="Area2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("RectangleShape2D_pubuk")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_w43rp")

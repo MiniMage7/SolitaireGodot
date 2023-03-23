@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://bugmuuo6hyils"]
+
+[ext_resource type="Texture2D" uid="uid://c7ad1j7mv3oyb" path="res://assets/Cards/card_back.png" id="1_wfvf8"]
+[ext_resource type="Script" path="res://deck.gd" id="2_vo8ws"]
+
+[node name="Deck" type="TextureButton"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -960.0
+offset_top = -540.0
+offset_right = -860.0
+offset_bottom = -399.0
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = ExtResource("1_wfvf8")
+script = ExtResource("2_vo8ws")
+
+[connection signal="pressed" from="." to="." method="_on_pressed"]

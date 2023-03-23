@@ -1,0 +1,69 @@
+[gd_scene load_steps=7 format=3 uid="uid://bmu3u7wqxsech"]
+
+[ext_resource type="Script" path="res://game_board.gd" id="1_4cbrx"]
+[ext_resource type="Texture2D" uid="uid://blwlqoieipe2j" path="res://assets/background.png" id="1_k3b1t"]
+[ext_resource type="PackedScene" uid="uid://ch4i0h2vwdd5j" path="res://card_column.tscn" id="2_fapbq"]
+[ext_resource type="PackedScene" uid="uid://cw1hjbor6167t" path="res://card.tscn" id="2_rtwy1"]
+[ext_resource type="PackedScene" uid="uid://c3pd2hm36g02i" path="res://foundation_card_slot.tscn" id="3_oj1ct"]
+[ext_resource type="PackedScene" uid="uid://bugmuuo6hyils" path="res://deck.tscn" id="4_hlde7"]
+
+[node name="GameBoard" type="Node2D"]
+script = ExtResource("1_4cbrx")
+card_scene = ExtResource("2_rtwy1")
+
+[node name="Background" type="TextureRect" parent="."]
+offset_right = 1920.0
+offset_bottom = 1080.0
+texture = ExtResource("1_k3b1t")
+
+[node name="LeftMargin" type="ColorRect" parent="Background"]
+layout_mode = 0
+offset_right = 416.0
+offset_bottom = 1080.0
+color = Color(0, 0, 0, 1)
+
+[node name="RightMargin" type="ColorRect" parent="Background"]
+layout_mode = 0
+offset_left = 1504.0
+offset_right = 1920.0
+offset_bottom = 1080.0
+color = Color(0, 0, 0, 1)
+
+[node name="CardColumn1" parent="." instance=ExtResource("2_fapbq")]
+position = Vector2(540, 640)
+
+[node name="CardColumn2" parent="." instance=ExtResource("2_fapbq")]
+position = Vector2(680, 640)
+
+[node name="CardColumn3" parent="." instance=ExtResource("2_fapbq")]
+position = Vector2(820, 640)
+
+[node name="CardColumn4" parent="." instance=ExtResource("2_fapbq")]
+position = Vector2(960, 640)
+
+[node name="CardColumn5" parent="." instance=ExtResource("2_fapbq")]
+position = Vector2(1100, 640)
+
+[node name="CardColumn6" parent="." instance=ExtResource("2_fapbq")]
+position = Vector2(1240, 640)
+
+[node name="CardColumn7" parent="." instance=ExtResource("2_fapbq")]
+position = Vector2(1380, 640)
+
+[node name="FoundationCardSlot1" parent="." instance=ExtResource("3_oj1ct")]
+position = Vector2(960, 170)
+
+[node name="FoundationCardSlot2" parent="." instance=ExtResource("3_oj1ct")]
+position = Vector2(1100, 170)
+
+[node name="FoundationCardSlot3" parent="." instance=ExtResource("3_oj1ct")]
+position = Vector2(1240, 170)
+
+[node name="FoundationCardSlot4" parent="." instance=ExtResource("3_oj1ct")]
+position = Vector2(1380, 170)
+
+[node name="Deck" parent="." instance=ExtResource("4_hlde7")]
+offset_left = 490.0
+offset_top = 100.0
+offset_right = 590.0
+offset_bottom = 241.0
