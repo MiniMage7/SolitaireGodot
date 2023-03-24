@@ -6,6 +6,7 @@
 size = Vector2(140, 181)
 
 [node name="FoundationCardSlot" type="Area2D"]
+collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false

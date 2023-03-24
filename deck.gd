@@ -54,6 +54,7 @@ func flip3():
 		flipped_deck = []
 		
 		# Change icon back to deck
+		self.texture_normal = preload("res://assets/Cards/card_back.png")
 		
 		return
 	
@@ -73,8 +74,7 @@ func flip3():
 		card.show()
 	
 	if cards_in_deck == 0:
-		pass
-		# Change icon to empty deck whatever
+		self.texture_normal = preload("res://assets/deck_empty.png")
 
 
 

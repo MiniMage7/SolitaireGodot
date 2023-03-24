@@ -24,3 +24,8 @@ func flip_top_card_up():
 	if number_of_cards == 0:
 		return
 	top_child_card.flip_top_card_up()
+
+func change_click_detections():
+	if number_of_cards == 0:
+		return
+	top_child_card.change_click_detections()

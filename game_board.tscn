@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://bmu3u7wqxsech"]
 
 [ext_resource type="Script" path="res://game_board.gd" id="1_4cbrx"]
-[ext_resource type="Texture2D" uid="uid://blwlqoieipe2j" path="res://assets/background.png" id="1_k3b1t"]
+[ext_resource type="Texture2D" uid="uid://hv6jxhpl2did" path="res://assets/background.png" id="1_k3b1t"]
 [ext_resource type="PackedScene" uid="uid://ch4i0h2vwdd5j" path="res://card_column.tscn" id="2_fapbq"]
 [ext_resource type="PackedScene" uid="uid://cw1hjbor6167t" path="res://card.tscn" id="2_rtwy1"]
 [ext_resource type="PackedScene" uid="uid://c3pd2hm36g02i" path="res://foundation_card_slot.tscn" id="3_oj1ct"]

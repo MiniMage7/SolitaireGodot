@@ -34,6 +34,7 @@ func new_game():
 	
 	for i in range (1, 8):
 		get_node("CardColumn" + str(i)).flip_top_card_up()
+		get_node("CardColumn" + str(i)).change_click_detections()
 	
 	# Put the rest of the deck into the deck scene
 	$Deck.create_deck(deck)
@@ -60,6 +61,9 @@ func make_card(card_index: int):
 	card.value = (card_index % 13) + 1
 	
 	card.card_name = str(card.value) + "_" + card.suit
+	
+	# So the card can easily access the game_board when being moved
+	card.game_board = self
 	
 	return card
 

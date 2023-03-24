@@ -23,3 +23,8 @@ gdscript/warnings/integer_division=0
 
 window/size/viewport_width=1920
 window/size/viewport_height=1080
+
+[layer_names]
+
+2d_physics/layer_1="Board Elements"
+2d_physics/layer_2="Cards"
