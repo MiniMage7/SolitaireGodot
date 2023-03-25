@@ -15,23 +15,17 @@ func _process(delta):
 
 # Called when a new card is added to the column
 func add_card(new_child_card):
-	# If this is a stack of multiple cards
-	if new_child_card.child_card_count == null:
-		new_child_card.child_card_count = 0
-	
-	number_of_cards += new_child_card.child_card_count
-	
 	# If there are no cards in the column
-	if number_of_cards - new_child_card.child_card_count == 0:
+	if number_of_cards == 0:
 		# Set the card as the column's child
 		self.add_child(new_child_card)
 		$card.position.x = 0
 		$card.position.y = -289
 	else:
 		# Otherwise tell the top card in the stack to do this process
-		$card.add_card(new_child_card, number_of_cards)
+		$card.add_card(new_child_card, number_of_cards + new_child_card.child_card_count)
 	
-	number_of_cards += 1
+	number_of_cards += new_child_card.child_card_count + 1
 
 
 # Flips the top card in a column face up
@@ -57,11 +51,6 @@ func remove_card():
 	number_of_cards -= 1
 
 
-# Called when more than 1 card is moved into the column at once
-func add_extra_cards():
-	print("EXTRA CARD ADDED")
-	# If there are other cards in the stack, call this on them too
-	if number_of_cards != 0:
-		$card.add_extra_cards()
-	
-	number_of_cards += 1
+# Is called when a card is looking for what column it is in, so this returns itself
+func get_top_parent():
+	return self

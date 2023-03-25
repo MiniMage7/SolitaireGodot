@@ -8,7 +8,7 @@ var is_face_up
 var card_name
 
 # Number of cards stacked on the card
-var child_card_count
+var child_card_count = 0
 
 # Whether the card is being clicked (dragged)
 var is_being_clicked
@@ -27,11 +27,11 @@ func _ready():
 	$CollisionShape2D.set_deferred("disabled", true)
 	$TopClickDetection.set_deferred("disabled", true)
 	$BottomClickDetection.set_deferred("disabled", true)
-	child_card_count = 0
 	hide()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
+# This is where card movement during dragging is processed
 func _process(delta):
 	# If the user is currently dragging
 	if is_being_clicked:
@@ -99,14 +99,17 @@ func _on_input_event(viewport, event, shape_idx):
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
 		# If its being pressed and there is no dragging yet
 		if !is_being_clicked and event.pressed:
+			# Call remove card on the card above it for every card being picked up
+			for i in child_card_count + 1:
+				get_parent().remove_card()
+			
 			# Set the card's parent to the gameboard to make movement easier
-			old_parent = get_parent()
-			old_parent.remove_child(self)
+			# And store the card area the card came from
+			old_parent = get_top_parent()
+			get_parent().remove_child(self)
 			game_board.add_child(self)
 			
-			# Call remove card on the column above it for every card being picked up
-			for i in child_card_count + 1:
-				old_parent.remove_card()
+
 			
 			# Change the collision detection to only be the center to the card
 			$TopClickDetection.set_deferred("disabled", true)
@@ -154,14 +157,12 @@ func on_card_release():
 func remove_card():
 	child_card_count -= 1
 	# Since there will always (eventually) be a card_column, this can be re-called until
-	# it reaches the function in the card_column where it won't be re-called
+	# it reaches the function in card_column where it won't be re-called
+	# This will result in the number of child cards for each object in the column going down 1
 	get_parent().remove_card()
 
 
-# Called when multiple cards are added to the column at once to correct the number of children
-func add_extra_cards():
-	# If there are other cards stacked on this card, call this on the next card
-	if child_card_count != 0:
-		$card.add_extra_cards()
-	# Add another card to the count
-	child_card_count += 1
+# Is called all the way up until it reaches a non-card which returns itself
+func get_top_parent():
+	return get_parent().get_top_parent()
+
