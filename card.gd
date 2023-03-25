@@ -22,6 +22,7 @@ var potential_new_parent
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	# All cards are created face down with no collision detection enabled
 	is_face_up = false
 	$CollisionShape2D.set_deferred("disabled", true)
 	$TopClickDetection.set_deferred("disabled", true)
@@ -32,6 +33,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	# If the user is currently dragging
 	if is_being_clicked:
 		# Backup release check in case the user somehow released when not on the card
 		if !Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
@@ -42,7 +44,8 @@ func _process(delta):
 			self.position = get_viewport().get_mouse_position()
 
 
-func add_card(new_child_card):
+# Called when a card is added to the column this card is a part of
+func add_card(new_child_card, new_child_card_count):
 	# If this card doesn't have any cards on top of it
 	if child_card_count == 0:
 		# Put the new card on top of it
@@ -51,10 +54,12 @@ func add_card(new_child_card):
 		new_child_card.position.y = 40
 	# If it already does have a card on it, try to put it on that card instead
 	else:
-		$card.add_card(new_child_card)
+		$card.add_card(new_child_card, new_child_card_count - 1)
 	
-	child_card_count += 1
+	child_card_count = new_child_card_count
 
+
+# Flips the card face up
 func flip_card_up():
 	if is_face_up:
 		return
@@ -62,38 +67,55 @@ func flip_card_up():
 	get_node("Sprite2D").texture = load("res://assets/Cards/" + card_name + ".png")
 	is_face_up = true
 
+
+# Flips the top card in a column face up
 func flip_top_card_up():
+	# If this is the top card, flip it up
 	if child_card_count == 0:
 		flip_card_up()
+	# Otherwise call this function on the next highest card
 	else:
 		$card.flip_top_card_up()
 
 
+# Modifies the collision of all cards in this card's column
 func change_click_detections():
+	# If this is the top card, have all click collision turned on
 	if child_card_count == 0:
 		$TopClickDetection.set_deferred("disabled", false)
 		$BottomClickDetection.set_deferred("disabled", false)
+	# If it's not the top card
 	else:
+		# If its face up, have the top part of the card's collison on
 		if is_face_up:
 			$TopClickDetection.set_deferred("disabled", false)
+		# Call this on the next card in the column
 		$card.change_click_detections()
 
 
 # Checks for clicking and releasing on the card
 func _on_input_event(viewport, event, shape_idx):
+	# If the event relates to a left mouse button push
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
+		# If its being pressed and there is no dragging yet
 		if !is_being_clicked and event.pressed:
 			# Set the card's parent to the gameboard to make movement easier
 			old_parent = get_parent()
 			old_parent.remove_child(self)
 			game_board.add_child(self)
 			
+			# Call remove card on the column above it for every card being picked up
+			for i in child_card_count + 1:
+				print("CARD REMOVED")
+				old_parent.remove_card()
+			
+			# Change the collision detection to only be the center to the card
 			$TopClickDetection.set_deferred("disabled", true)
 			$BottomClickDetection.set_deferred("disabled", true)
 			$CollisionShape2D.set_deferred("disabled", false)
 			
 			is_being_clicked = true
-		
+		# Otherwise if the card is being released
 		elif is_being_clicked and !event.pressed:
 			on_card_release()
 
@@ -109,6 +131,7 @@ func _on_area_exited(area):
 		potential_new_parent == null
 
 
+# Called at the end of a drag or click
 func on_card_release():
 	is_being_clicked = false
 	
@@ -125,7 +148,31 @@ func on_card_release():
 	$CollisionShape2D.set_deferred("disabled", true)
 	
 	get_parent().remove_child(self)
+#	prepare_for_column_adding(child_card_count)
 	potential_new_parent.add_card(self)
 
 
+# Called when a card is removed from a card's column
+func remove_card():
+	child_card_count -= 1
+	# Since there will always (eventually) be a card_column, this can be re-called until
+	# it reaches the function in the card_column where it won't be re-called
+	get_parent().remove_card()
 
+
+# Called when multiple cards are added to the column at once to correct the number of children
+func add_extra_cards():
+	# If there are other cards stacked on this card, call this on the next card
+	if child_card_count != 0:
+		$card.add_extra_cards()
+	# Add another card to the count
+	child_card_count += 1
+
+
+## Called when cards are being dragged to another pile
+## Sets all dragged cards child count down so that when they're added, they'll be correct
+#func prepare_for_column_adding(cards_to_subtract):
+#	if child_card_count != 0:
+#		$card.prepare_for_column_adding(cards_to_subtract)
+#
+#	child_card_count -= cards_to_subtract
