@@ -120,3 +120,17 @@ func change_click_detections():
 			pass
 	face_up_cards[face_up_card_count - 1].get_node("TopClickDetection").set_deferred("disabled", false)
 	face_up_cards[face_up_card_count - 1].get_node("BottomClickDetection").set_deferred("disabled", false)
+
+
+# Is called only when a card is attempted to be dragged from the deck and fails
+func add_card(card):
+	# Remove the card from face up
+	face_up_card_count += 1
+	face_up_cards.append(card)
+	# Remove the card from flipped
+	cards_in_flipped_deck += 1
+	flipped_deck.append(card)
+	
+	add_child(card)
+	card.position.x = 190 + 50 * (face_up_card_count - 1)
+	card.position.y = 70
