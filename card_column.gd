@@ -54,3 +54,12 @@ func remove_card():
 # Is called when a card is looking for what column it is in, so this returns itself
 func get_top_parent():
 	return self
+
+
+# Check if a card can be placed in the column
+func check_card_validity(card):
+	# If there are no cards in the column, return true if it is a king
+	if number_of_cards == 0:
+		return card.value == 13
+	# Otherwise, check if it can be placed on the card column
+	return $card.check_card_validity_column(card.color, card.value)

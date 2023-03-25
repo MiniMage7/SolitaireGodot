@@ -141,6 +141,11 @@ func on_card_release():
 	if potential_new_parent == null:
 		potential_new_parent = old_parent
 	
+	# If the card is attempting to move somewhere different
+	if potential_new_parent != old_parent:
+		if !potential_new_parent.check_card_validity(self):
+			# If it can't move there, put it back where it came from
+			potential_new_parent = old_parent
 	
 	# TODO: Set card's new parent, check if any cards need to be flipped up, check for any hit box changes etc.
 	
@@ -170,3 +175,11 @@ func remove_card():
 func get_top_parent():
 	return get_parent().get_top_parent()
 
+
+# Checks for in a column, if a card can be put in this column
+func check_card_validity_column(passed_color, passed_value):
+	# If there are no cards on this card, return true if its a different color and its value is 1 less
+	if child_card_count == 0:
+		return passed_color != color && passed_value + 1 == value
+	# Otherwise check if it can be put on the next card
+	return $card.check_card_validity_column(passed_color, passed_value)
