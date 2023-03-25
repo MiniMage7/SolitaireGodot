@@ -89,6 +89,7 @@ func change_click_detections():
 		# If its face up, have the top part of the card's collison on
 		if is_face_up:
 			$TopClickDetection.set_deferred("disabled", false)
+			$BottomClickDetection.set_deferred("disabled", true)
 		# Call this on the next card in the column
 		$card.change_click_detections()
 
@@ -109,7 +110,6 @@ func _on_input_event(viewport, event, shape_idx):
 			get_parent().remove_child(self)
 			game_board.add_child(self)
 			
-
 			
 			# Change the collision detection to only be the center to the card
 			$TopClickDetection.set_deferred("disabled", true)
@@ -151,6 +151,10 @@ func on_card_release():
 	
 	get_parent().remove_child(self)
 	potential_new_parent.add_card(self)
+	
+	old_parent.flip_top_card_up()
+	potential_new_parent.change_click_detections()
+	old_parent.change_click_detections()
 
 
 # Called when a card is removed from a card's column
