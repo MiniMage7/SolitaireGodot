@@ -45,7 +45,7 @@ func _process(delta):
 
 
 # Called when a card is added to the column this card is a part of
-func add_card(new_child_card, new_child_card_count):
+func add_card_column(new_child_card, new_child_card_count):
 	# If this card doesn't have any cards on top of it
 	if child_card_count == 0:
 		# Put the new card on top of it
@@ -54,7 +54,22 @@ func add_card(new_child_card, new_child_card_count):
 		new_child_card.position.y = 40
 	# If it already does have a card on it, try to put it on that card instead
 	else:
-		$card.add_card(new_child_card, new_child_card_count - 1)
+		$card.add_card_column(new_child_card, new_child_card_count - 1)
+	
+	child_card_count = new_child_card_count
+
+
+# Called when a card is added to the foundation slot this card is a part of
+func add_card_foundation(new_child_card, new_child_card_count):
+	# If this card doesn't have any cards on top of it
+	if child_card_count == 0:
+		# Put the new card on top of it
+		self.add_child(new_child_card)
+		new_child_card.position.x = 0
+		new_child_card.position.y = 0
+	# If it already does have a card on it, try to put it on that card instead
+	else:
+		$card.add_card_foundation(new_child_card, new_child_card_count - 1)
 	
 	child_card_count = new_child_card_count
 
@@ -79,7 +94,7 @@ func flip_top_card_up():
 
 
 # Modifies the collision of all cards in this card's column
-func change_click_detections():
+func change_click_detections_column():
 	# If this is the top card, have all click collision turned on
 	if child_card_count == 0:
 		$TopClickDetection.set_deferred("disabled", false)
@@ -91,7 +106,21 @@ func change_click_detections():
 			$TopClickDetection.set_deferred("disabled", false)
 			$BottomClickDetection.set_deferred("disabled", true)
 		# Call this on the next card in the column
-		$card.change_click_detections()
+		$card.change_click_detections_column()
+
+
+# Modifies the collision of all cards in this card's foundation slot
+func change_click_detections_foundation():
+	# If this is the top card, have all click collision turned on
+	if child_card_count == 0:
+		$TopClickDetection.set_deferred("disabled", false)
+		$BottomClickDetection.set_deferred("disabled", false)
+	# If it's not the top card, diable all click detections
+	else:
+		$TopClickDetection.set_deferred("disabled", true)
+		$BottomClickDetection.set_deferred("disabled", true)
+		# Call this on the next card in the slot
+		$card.change_click_detections_foundation()
 
 
 # Checks for clicking and releasing on the card
@@ -147,11 +176,6 @@ func on_card_release():
 			# If it can't move there, put it back where it came from
 			potential_new_parent = old_parent
 	
-	# TODO: Set card's new parent, check if any cards need to be flipped up, check for any hit box changes etc.
-	
-	#REMOVE THIS LATER
-	$TopClickDetection.set_deferred("disabled", false)
-	$BottomClickDetection.set_deferred("disabled", false)
 	$CollisionShape2D.set_deferred("disabled", true)
 	
 	get_parent().remove_child(self)
@@ -183,3 +207,12 @@ func check_card_validity_column(passed_color, passed_value):
 		return passed_color != color && passed_value + 1 == value
 	# Otherwise check if it can be put on the next card
 	return $card.check_card_validity_column(passed_color, passed_value)
+
+
+# Checks for in a foundation slot, if a card can be put in this slot
+func check_card_validity_foundation(passed_suit, passed_value):
+	# If there are no cards on this card, return true if its a different color and its value is 1 less
+	if child_card_count == 0:
+		return passed_suit == suit && passed_value - 1 == value
+	# Otherwise check if it can be put on the next card
+	return $card.check_card_validity_foundation(passed_suit, passed_value)

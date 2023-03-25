@@ -23,7 +23,7 @@ func add_card(new_child_card):
 		$card.position.y = -289
 	else:
 		# Otherwise tell the top card in the stack to do this process
-		$card.add_card(new_child_card, number_of_cards + new_child_card.child_card_count)
+		$card.add_card_column(new_child_card, number_of_cards + new_child_card.child_card_count)
 	
 	number_of_cards += new_child_card.child_card_count + 1
 
@@ -43,7 +43,7 @@ func change_click_detections():
 	if number_of_cards == 0:
 		return
 	# Otherwise tell the top card to change all the click detections in its column
-	$card.change_click_detections()
+	$card.change_click_detections_column()
 
 
 # Called when a card is removed from the column, just modifies the card count
