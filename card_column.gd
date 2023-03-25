@@ -31,12 +31,6 @@ func add_card(new_child_card):
 		# Otherwise tell the top card in the stack to do this process
 		$card.add_card(new_child_card, number_of_cards)
 	
-#	# If this is a stack of multiple cards
-#	if new_child_card.child_card_count != null:
-#	# Call the add extra card function for each of them
-#		for i in range(new_child_card.child_card_count):
-#			add_extra_cards()
-	
 	number_of_cards += 1
 
 

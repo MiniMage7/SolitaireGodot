@@ -106,7 +106,6 @@ func _on_input_event(viewport, event, shape_idx):
 			
 			# Call remove card on the column above it for every card being picked up
 			for i in child_card_count + 1:
-				print("CARD REMOVED")
 				old_parent.remove_card()
 			
 			# Change the collision detection to only be the center to the card
@@ -127,8 +126,8 @@ func _on_area_entered(area):
 
 # Remove the last area when it leaves if a new area hasn't already overwritten it
 func _on_area_exited(area):
-	if potential_new_parent == area:
-		potential_new_parent == null
+	if is_being_clicked && potential_new_parent == area:
+		potential_new_parent = null
 
 
 # Called at the end of a drag or click
@@ -137,7 +136,7 @@ func on_card_release():
 	
 	# Check if the card was over an area when released
 	if potential_new_parent == null:
-		potential_new_parent == old_parent
+		potential_new_parent = old_parent
 	
 	
 	# TODO: Set card's new parent, check if any cards need to be flipped up, check for any hit box changes etc.
@@ -148,7 +147,6 @@ func on_card_release():
 	$CollisionShape2D.set_deferred("disabled", true)
 	
 	get_parent().remove_child(self)
-#	prepare_for_column_adding(child_card_count)
 	potential_new_parent.add_card(self)
 
 
@@ -167,12 +165,3 @@ func add_extra_cards():
 		$card.add_extra_cards()
 	# Add another card to the count
 	child_card_count += 1
-
-
-## Called when cards are being dragged to another pile
-## Sets all dragged cards child count down so that when they're added, they'll be correct
-#func prepare_for_column_adding(cards_to_subtract):
-#	if child_card_count != 0:
-#		$card.prepare_for_column_adding(cards_to_subtract)
-#
-#	child_card_count -= cards_to_subtract
