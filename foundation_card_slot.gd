@@ -28,7 +28,7 @@ func add_card(new_child_card):
 	number_of_cards += 1
 
 
-# Can be called when a card is removed from this slot, but since a card can't be face down here, we just exit
+# Can be called when a card is removed from this slot, but since a card can't be face down here, just exit
 func flip_top_card_up():
 	return
 
@@ -59,6 +59,4 @@ func check_card_validity(card):
 		return card.value == 1
 	# Otherwise, check if it can be placed on the card column
 	return $card.check_card_validity_foundation(card.suit, card.value)
-
-
 

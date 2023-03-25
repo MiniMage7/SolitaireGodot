@@ -139,7 +139,6 @@ func _on_input_event(viewport, event, shape_idx):
 			get_parent().remove_child(self)
 			game_board.add_child(self)
 			
-			
 			# Change the collision detection to only be the center to the card
 			$TopClickDetection.set_deferred("disabled", true)
 			$BottomClickDetection.set_deferred("disabled", true)
@@ -175,6 +174,9 @@ func on_card_release():
 		if !potential_new_parent.check_card_validity(self):
 			# If it can't move there, put it back where it came from
 			potential_new_parent = old_parent
+	
+	# Necessary because cards moved from the deck have a different name
+	self.name = "card"
 	
 	$CollisionShape2D.set_deferred("disabled", true)
 	
