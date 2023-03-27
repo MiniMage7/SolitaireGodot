@@ -32,7 +32,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 # This is where card movement during dragging is processed
-func _process(delta):
+func _process(_delta):
 	# If the user is currently dragging
 	if is_being_clicked:
 		# Backup release check in case the user somehow released when not on the card
@@ -125,7 +125,7 @@ func change_click_detections_foundation():
 
 
 # Checks for clicking and releasing on the card
-func _on_input_event(viewport, event, shape_idx):
+func _on_input_event(_viewport, event, _shape_idx):
 	# If the event relates to a left mouse button push
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
 		# If its being pressed and there is no dragging yet

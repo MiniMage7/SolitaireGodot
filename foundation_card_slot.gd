@@ -8,11 +8,6 @@ func _ready():
 	number_of_cards = 0
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
-
-
 # Called when a new card is added to this foundation slot
 func add_card(new_child_card):
 	# If there are no cards in the slot

@@ -9,15 +9,6 @@ var cards_in_flipped_deck
 var face_up_cards
 var face_up_card_count
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
-
 
 # Called when this deck is first made
 func create_deck(passed_deck):

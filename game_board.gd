@@ -10,11 +10,6 @@ func _ready():
 	new_game()
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
-
-
 func new_game():
 	# Make and shuffle a deck of cards
 	var deck = []
