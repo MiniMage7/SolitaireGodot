@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://bugmuuo6hyils" path="res://deck.tscn" id="4_hlde7"]
 
 [node name="GameBoard" type="Node2D"]
+position = Vector2(-420, 0)
 script = ExtResource("1_4cbrx")
 card_scene = ExtResource("2_rtwy1")
 
@@ -15,19 +16,6 @@ card_scene = ExtResource("2_rtwy1")
 offset_right = 1920.0
 offset_bottom = 1080.0
 texture = ExtResource("1_k3b1t")
-
-[node name="LeftMargin" type="ColorRect" parent="Background"]
-layout_mode = 0
-offset_right = 416.0
-offset_bottom = 1080.0
-color = Color(0, 0, 0, 1)
-
-[node name="RightMargin" type="ColorRect" parent="Background"]
-layout_mode = 0
-offset_left = 1504.0
-offset_right = 1920.0
-offset_bottom = 1080.0
-color = Color(0, 0, 0, 1)
 
 [node name="CardColumn1" parent="." instance=ExtResource("2_fapbq")]
 position = Vector2(540, 640)

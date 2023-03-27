@@ -56,6 +56,10 @@ func flip3():
 		cards_in_flipped_deck = 0
 		flipped_deck = []
 		
+		# If the deck is empty, don't redo the texture
+		if cards_in_deck == 0:
+			return
+		
 		# Change icon back to deck
 		self.texture_normal = preload("res://assets/Cards/card_back.png")
 		
@@ -112,6 +116,7 @@ func get_top_parent():
 
 
 func change_click_detections():
+	#TODO: Maybe flip card up at card count 1 to fix invisible card
 	if face_up_card_count == 0:
 		if cards_in_flipped_deck == 0:
 			return
