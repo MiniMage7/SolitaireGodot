@@ -41,7 +41,8 @@ func _process(delta):
 		
 		# User is dragging
 		else:
-			self.position = get_viewport().get_mouse_position()
+			# The vector at the end is to adjust for the gameboard's offset
+			self.position = get_viewport().get_mouse_position() + Vector2(420, 0)
 
 
 # Called when a card is added to the column this card is a part of
