@@ -94,6 +94,19 @@ func remove_card():
 	# Remove the card from flipped
 	cards_in_flipped_deck -= 1
 	flipped_deck.pop_back()
+	
+	if face_up_card_count == 0:
+		if cards_in_flipped_deck == 0:
+			return
+		else:
+			# Make the last card in flipped deck face up so that it can be used
+			face_up_card_count = 1
+			var card = flipped_deck[cards_in_flipped_deck - 1]
+			face_up_cards.append(card)
+			self.add_child(card)
+			card.position.x = 190
+			card.position.y = 70
+			card.show()
 
 
 # Can be called when a card is removed from this slot, but since a card can't be face down here, just exit
@@ -107,20 +120,6 @@ func get_top_parent():
 
 
 func change_click_detections():
-	#TODO: Maybe flip card up at card count 1 to fix invisible card
-	if face_up_card_count == 0:
-		if cards_in_flipped_deck == 0:
-			return
-		else:
-			# Make the last card in flipped deck face up so that it can be used
-			face_up_card_count = 1
-			var card = flipped_deck[cards_in_flipped_deck - 1]
-			face_up_cards.append(card)
-			self.add_child(card)
-			card.position.x = 190
-			card.position.y = 70
-			card.show()
-	
 	face_up_cards[face_up_card_count - 1].get_node("TopClickDetection").set_deferred("disabled", false)
 	face_up_cards[face_up_card_count - 1].get_node("BottomClickDetection").set_deferred("disabled", false)
 
