@@ -76,23 +76,24 @@ func add_card_foundation(new_child_card, new_child_card_count):
 	child_card_count = new_child_card_count
 
 
-# Flips the card face up
+# Flips the card face up and returns if it was flipped up
 func flip_card_up():
 	if is_face_up:
-		return
+		return false
 	
 	get_node("Sprite2D").texture = load("res://assets/Cards/" + card_name + ".png")
 	is_face_up = true
+	return true
 
 
-# Flips the top card in a column face up
+# Flips the top card in a column face up and returns if a card was flipped up
 func flip_top_card_up():
 	# If this is the top card, flip it up
 	if child_card_count == 0:
-		flip_card_up()
+		return flip_card_up()
 	# Otherwise call this function on the next highest card
 	else:
-		$card.flip_top_card_up()
+		return $card.flip_top_card_up()
 
 
 # Modifies the collision of all cards in this card's column
@@ -190,9 +191,18 @@ func on_card_release():
 	
 	potential_new_parent.add_card(self)
 	
-	old_parent.flip_top_card_up()
+	var card_was_flipped = old_parent.flip_top_card_up()
 	potential_new_parent.change_click_detections()
 	old_parent.change_click_detections()
+	
+	# If the card does move somewhere different, save its move to the move array
+	if potential_new_parent != old_parent:
+		var move = game_board.Move.new()
+		move.card = self
+		move.first_position = old_parent
+		move.second_position = potential_new_parent
+		move.card_was_flipped = card_was_flipped
+		game_board.moves.append(move)
 
 
 # Called when a card is removed from a card's column
@@ -256,3 +266,12 @@ func auto_move():
 				get_parent().remove_card()
 			on_card_release()
 			return
+
+
+# Goes through the card column and flips the first flipped up card down
+func flip_bottom_card_back():
+	if is_face_up:
+		get_node("Sprite2D").texture = load("res://assets/Cards/card_back.png")
+		is_face_up = false
+	else:
+		$card.flip_bottom_card_back()

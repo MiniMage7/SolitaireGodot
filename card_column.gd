@@ -23,13 +23,13 @@ func add_card(new_child_card):
 	number_of_cards += new_child_card.child_card_count + 1
 
 
-# Flips the top card in a column face up
+# Flips the top card in a column face up and returns if a card was flipped
 func flip_top_card_up():
 	# If there are no cards in the column, do nothing
 	if number_of_cards == 0:
-		return
+		return false
 	# Otherwise tell the top card to flip the top card up
-	$card.flip_top_card_up()
+	return $card.flip_top_card_up()
 
 
 # Changes the hit boxes of all cards in the column so they work properly
@@ -69,3 +69,8 @@ func reset_column():
 	$card.reset_cards()
 	remove_child($card)
 	number_of_cards = 0
+
+
+# Goes through the card column and flips the first flipped up card down
+func flip_bottom_card_back():
+	$card.flip_bottom_card_back()

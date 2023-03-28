@@ -24,8 +24,9 @@ func add_card(new_child_card):
 
 
 # Can be called when a card is removed from this slot, but since a card can't be face down here, just exit
+# Returns if a card was flipped
 func flip_top_card_up():
-	return
+	return false
 
 
 # Changes the hit boxes of all cards in the foundation slot so they work properly

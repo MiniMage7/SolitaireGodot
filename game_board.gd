@@ -2,6 +2,14 @@ extends Node2D
 
 @export var card_scene: PackedScene
 
+var moves
+
+class Move:
+	var card
+	var first_position
+	var second_position
+	var card_was_flipped
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
@@ -22,6 +30,9 @@ func _input(event):
 			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_MAXIMIZED)
 		else:
 			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
+	
+	if event.is_action_pressed("Undo"):
+		undo()
 
 
 func start_game():
@@ -47,6 +58,9 @@ func start_game():
 	
 	# Put the rest of the deck into the deck scene
 	$Deck.create_deck(deck)
+	
+	# Make an array to keep track of all the moves in the game
+	moves = []
 
 
 # Creates a card based off a passed index
@@ -88,7 +102,32 @@ func reset_board():
 	$Deck.reset_deck()
 
 
+# Called to clear the board and then start a new game
 func _on_new_game_pressed():
 	reset_board()
-	
 	start_game()
+
+
+# Undo's moves in the game
+func undo():
+	# If there is no move to undo, do nothing
+	if moves.is_empty():
+		return
+	
+	var move = moves.pop_back()
+	
+	if move.card is String and move.card == "DeckFlip":
+		# First position holds how many cards were face up
+		$Deck.undo_deck_flip(move.first_position)
+		return
+	
+	for i in move.card.child_card_count + 1:
+		move.card.get_parent().remove_card()
+	
+	move.card.get_parent().remove_child(move.card)
+	move.first_position.add_card(move.card)
+	move.first_position.change_click_detections()
+	move.second_position.change_click_detections()
+	
+	if move.card_was_flipped:
+		move.first_position.flip_bottom_card_back()
