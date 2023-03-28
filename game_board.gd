@@ -58,6 +58,7 @@ func start_game():
 	
 	# Put the rest of the deck into the deck scene
 	$Deck.create_deck(deck)
+	$Deck.texture_normal = preload("res://assets/Cards/card_back.png")
 	
 	# Make an array to keep track of all the moves in the game
 	moves = []
