@@ -119,7 +119,11 @@ func get_top_parent():
 	return self
 
 
+# Changes the hit boxes of the next card in the deck so it works properly
 func change_click_detections():
+	# If there are no cards to flip up, don't do anything
+	if face_up_card_count == 0:
+		return
 	face_up_cards[face_up_card_count - 1].get_node("TopClickDetection").set_deferred("disabled", false)
 	face_up_cards[face_up_card_count - 1].get_node("BottomClickDetection").set_deferred("disabled", false)
 
