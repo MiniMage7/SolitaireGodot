@@ -20,6 +20,7 @@ var game_board
 var old_parent
 var potential_new_parent
 
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	# All cards are created face down with no collision detection enabled
@@ -149,6 +150,10 @@ func _on_input_event(_viewport, event, _shape_idx):
 		# Otherwise if the card is being released
 		elif is_being_clicked and !event.pressed:
 			on_card_release()
+	
+	# If the event is a right mouse button push
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
+		auto_move()
 
 
 # Store whatever card slot/column that the card last hovered over
@@ -176,12 +181,13 @@ func on_card_release():
 			# If it can't move there, put it back where it came from
 			potential_new_parent = old_parent
 	
-	# Necessary because cards moved from the deck have a different name
-	self.name = "card"
-	
 	$CollisionShape2D.set_deferred("disabled", true)
 	
 	get_parent().remove_child(self)
+	
+	# Necessary because cards moved from the deck have a different name
+	self.name = "card"
+	
 	potential_new_parent.add_card(self)
 	
 	old_parent.flip_top_card_up()
@@ -229,3 +235,22 @@ func reset_cards():
 		$card.reset_cards()
 		remove_child($card)
 	queue_free()
+
+
+func auto_move():
+	# First check if the card can be moved to the foundation, and move it if it can
+	for i in range(1,5):
+		if game_board.get_node("FoundationCardSlot" + str(i)).check_card_validity(self):
+			potential_new_parent = game_board.get_node("FoundationCardSlot" + str(i))
+			old_parent = get_top_parent()
+			get_parent().remove_card()
+			on_card_release()
+			return
+	
+	for i in range(1,8):
+		if game_board.get_node("CardColumn" + str(i)).check_card_validity(self):
+			potential_new_parent = game_board.get_node("CardColumn" + str(i))
+			old_parent = get_top_parent()
+			get_parent().remove_card()
+			on_card_release()
+			return
