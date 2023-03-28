@@ -243,7 +243,8 @@ func auto_move():
 		if game_board.get_node("FoundationCardSlot" + str(i)).check_card_validity(self):
 			potential_new_parent = game_board.get_node("FoundationCardSlot" + str(i))
 			old_parent = get_top_parent()
-			get_parent().remove_card()
+			for j in child_card_count + 1:
+				get_parent().remove_card()
 			on_card_release()
 			return
 	
@@ -251,6 +252,7 @@ func auto_move():
 		if game_board.get_node("CardColumn" + str(i)).check_card_validity(self):
 			potential_new_parent = game_board.get_node("CardColumn" + str(i))
 			old_parent = get_top_parent()
-			get_parent().remove_card()
+			for j in child_card_count + 1:
+				get_parent().remove_card()
 			on_card_release()
 			return
