@@ -150,6 +150,17 @@ func add_card(card):
 	add_child(card)
 	card.position.x = 190 + 50 * (face_up_card_count - 1)
 	card.position.y = 70
+	
+	# Check for if there's more than 3 cards and adjust the cards
+	if face_up_card_count == 4:
+		# Remove the first card from face up
+		face_up_card_count -= 1
+		var card_to_remove = face_up_cards.pop_front()
+		card_to_remove.get_parent().remove_child(card_to_remove)
+		
+		# Move the other cards over
+		for i in range(3):
+			face_up_cards[i].position.x = 190 + 50 * i
 
 
 # Called to reset the deck for a new game
