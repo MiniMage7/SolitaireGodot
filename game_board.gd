@@ -7,10 +7,10 @@ func _ready():
 	DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
 	randomize()
 	
-	new_game()
+	start_game()
 
 
-func new_game():
+func start_game():
 	# Make and shuffle a deck of cards
 	var deck = []
 	
@@ -62,3 +62,19 @@ func make_card(card_index: int):
 	
 	return card
 
+
+# Called to reset all the baord items to start a new game
+func reset_board():
+	for i in range (1, 8):
+		get_node("CardColumn" + str(i)).reset_column()
+	
+	for i in range(1, 5):
+		get_node("FoundationCardSlot" + str(i)).reset_foundation()
+	
+	$Deck.reset_deck()
+
+
+func _on_new_game_pressed():
+	reset_board()
+	
+	start_game()

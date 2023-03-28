@@ -55,3 +55,13 @@ func check_card_validity(card):
 	# Otherwise, check if it can be placed on the card column
 	return $card.check_card_validity_foundation(card.suit, card.value)
 
+
+# Called when emptying the foundations for a new game
+func reset_foundation():
+	# If there are no cards in the foundation slot, theres nothing to reset
+	if number_of_cards == 0:
+		return
+	# Then call the reset function on the cards
+	$card.reset_cards()
+	remove_child($card)
+	number_of_cards = 0

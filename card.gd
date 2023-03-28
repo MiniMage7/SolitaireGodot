@@ -219,3 +219,13 @@ func check_card_validity_foundation(passed_suit, passed_value):
 		return passed_suit == suit && passed_value - 1 == value
 	# Otherwise check if it can be put on the next card
 	return $card.check_card_validity_foundation(passed_suit, passed_value)
+
+
+# Called to delete all cards for a new game
+func reset_cards():
+	# If there are no cards on this card, just delete iself
+	# Otherwise call this on the cards stacked on it and then delete itself
+	if child_card_count != 0:
+		$card.reset_cards()
+		remove_child($card)
+	queue_free()

@@ -140,3 +140,21 @@ func add_card(card):
 	add_child(card)
 	card.position.x = 190 + 50 * (face_up_card_count - 1)
 	card.position.y = 70
+
+
+# Called to reset the deck for a new game
+func reset_deck():
+	# Delete all cards in both decks
+	for i in range(cards_in_flipped_deck):
+		flipped_deck[i].queue_free()
+	
+	for i in range(cards_in_deck):
+		deck[i].queue_free()
+	
+	# Then empty the arrays and set the card counts to 0
+	cards_in_deck = 0
+	cards_in_flipped_deck = 0
+	face_up_card_count = 0
+	deck = []
+	flipped_deck = []
+	face_up_cards = []

@@ -58,3 +58,14 @@ func check_card_validity(card):
 		return card.value == 13
 	# Otherwise, check if it can be placed on the card column
 	return $card.check_card_validity_column(card.color, card.value)
+
+
+# Called to reset a column for a new game
+func reset_column():
+	# If there are no cards in the column, theres nothing to reset
+	if number_of_cards == 0:
+		return
+	# Then call the reset function on the cards
+	$card.reset_cards()
+	remove_child($card)
+	number_of_cards = 0
