@@ -127,6 +127,10 @@ func undo():
 	
 	move.card.get_parent().remove_child(move.card)
 	move.first_position.add_card(move.card)
+	
+	# Necessary because cards moved from the deck have a different name
+	move.card.name = "card"
+	
 	move.first_position.change_click_detections()
 	move.second_position.change_click_detections()
 	
