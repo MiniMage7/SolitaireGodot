@@ -50,6 +50,9 @@ func get_top_parent():
 
 # Check if a card can be placed in the slot
 func check_card_validity(card):
+	# If the card has any child card's, return false
+	if card.child_card_count != 0:
+		return false
 	# If there are no cards in the slot, return true if it is an ace
 	if number_of_cards == 0:
 		return card.value == 1
