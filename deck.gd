@@ -28,9 +28,9 @@ func flip3():
 	
 	var move = get_parent().Move.new()
 	move.card = "DeckFlip"
-	move.first_position = face_up_card_count
-	move.second_position = "DeckFlip"
-	move.card_was_flipped = "DeckFlip"
+	move.first_position = deck.duplicate()
+	move.second_position = flipped_deck.duplicate()
+	move.card_was_flipped = face_up_cards.duplicate()
 	get_parent().moves.append(move)
 	
 	# Hide any currently shown cards, disable their collision, and remove them from the shown card list
@@ -186,47 +186,30 @@ func reset_deck():
 
 
 # Undo the flipping of cards from the deck
-func undo_deck_flip(old_face_up_count):
-	# If there are no cards in the flipped deck
-	if cards_in_flipped_deck == 0:
-		# Move all the cards from the deck back to the flipped deck
-		flipped_deck = deck
-		cards_in_flipped_deck = cards_in_deck
-		deck = []
-		cards_in_deck = 0
-	
+func undo_deck_flip(old_deck, old_flipped_deck, old_face_up_cards):
 	var card
-	var cards_to_add = []
 	
-	# Remove each card currently face up
+	# Hide any currently shown cards, disable their collision, and remove them from the shown card list
 	for i in range(face_up_card_count):
-		card = face_up_cards.pop_back()
+		card = face_up_cards.pop_front()
 		card.hide()
 		card.get_node("TopClickDetection").set_deferred("disabled", true)
 		card.get_node("BottomClickDetection").set_deferred("disabled", true)
 		self.remove_child(card)
-		cards_to_add.append(card)
-		
-		flipped_deck.pop_back()
-		cards_in_flipped_deck -= 1
 	
+	# Restore all the values
+	deck = old_deck
+	cards_in_deck = deck.size()
+	
+	flipped_deck = old_flipped_deck
+	cards_in_flipped_deck = flipped_deck.size()
+	
+	face_up_cards = old_face_up_cards
+	face_up_card_count = face_up_cards.size()
+	
+	# Show the flipped cards
 	for i in range(face_up_card_count):
-		card = cards_to_add.pop_front()
-		cards_in_deck += 1
-		deck.insert(0, card)
-	
-	# Flip back each card that was there
-	for i in old_face_up_count:
-		card = flipped_deck.pop_back()
-		cards_in_flipped_deck -= 1
-		cards_to_add.append(card)
-	
-	for i in old_face_up_count:
-		card = cards_to_add.pop_back()
-		
-		face_up_cards.append(card)
-		flipped_deck.append(card)
-		cards_in_flipped_deck += 1
+		card = face_up_cards[i]
 		
 		self.add_child(card)
 		card.position.x = 190 + 50 * i
@@ -235,12 +218,10 @@ func undo_deck_flip(old_face_up_count):
 		card.show()
 		
 		# If it's the top card
-		if i + 1 == old_face_up_count:
+		if i + 1 == face_up_card_count:
 			# Make it so that the card can be clicked
 			card.get_node("TopClickDetection").set_deferred("disabled", false)
 			card.get_node("BottomClickDetection").set_deferred("disabled", false)
-	
-	face_up_card_count = old_face_up_count
 	
 	# Change the image of the deck as needed
 	if cards_in_deck == 0:
