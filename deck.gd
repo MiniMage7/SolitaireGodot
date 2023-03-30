@@ -160,7 +160,7 @@ func add_card(card):
 		# Remove the first card from face up
 		face_up_card_count -= 1
 		var card_to_remove = face_up_cards.pop_front()
-		card_to_remove.get_parent().remove_child(card_to_remove)
+		self.remove_child(card_to_remove)
 		
 		# Move the other cards over
 		for i in range(3):
@@ -200,7 +200,7 @@ func undo_deck_flip(old_face_up_count):
 	
 	# Remove each card currently face up
 	for i in range(face_up_card_count):
-		card = face_up_cards.pop_front()
+		card = face_up_cards.pop_back()
 		card.hide()
 		card.get_node("TopClickDetection").set_deferred("disabled", true)
 		card.get_node("BottomClickDetection").set_deferred("disabled", true)
@@ -211,11 +211,9 @@ func undo_deck_flip(old_face_up_count):
 		cards_in_flipped_deck -= 1
 	
 	for i in range(face_up_card_count):
-		card = cards_to_add.pop_back()
+		card = cards_to_add.pop_front()
 		cards_in_deck += 1
 		deck.insert(0, card)
-	
-	face_up_card_count = 0
 	
 	# Flip back each card that was there
 	for i in old_face_up_count:

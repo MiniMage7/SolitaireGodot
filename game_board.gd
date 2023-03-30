@@ -22,16 +22,16 @@ func _input(event):
 	if event.is_action_pressed("Close Game"):
 		get_tree().quit()
 	
-	if event.is_action_pressed("New Game"):
+	elif event.is_action_pressed("New Game"):
 		_on_new_game_pressed()
 	
-	if event.is_action_pressed("Toggle Fullscreen"):
+	elif event.is_action_pressed("Toggle Fullscreen"):
 		if DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_FULLSCREEN:
 			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_MAXIMIZED)
 		else:
 			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
 	
-	if event.is_action_pressed("Undo"):
+	elif event.is_action_pressed("Undo"):
 		undo()
 
 

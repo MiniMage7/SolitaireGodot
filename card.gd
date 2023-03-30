@@ -153,7 +153,7 @@ func _on_input_event(_viewport, event, _shape_idx):
 			on_card_release()
 	
 	# If the event is a right mouse button push
-	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_RIGHT and event.pressed and !is_being_clicked:
 		auto_move()
 
 
@@ -212,7 +212,6 @@ func remove_card():
 	# it reaches the function in card_column where it won't be re-called
 	# This will result in the number of child cards for each object in the column going down 1
 	get_parent().remove_card()
-
 
 # Is called all the way up until it reaches a non-card which returns itself
 func get_top_parent():
