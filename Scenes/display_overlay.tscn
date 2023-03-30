@@ -1,9 +1,10 @@
-[gd_scene load_steps=2 format=3 uid="uid://b5ga7j03s70ju"]
+[gd_scene load_steps=3 format=3 uid="uid://br08c1qx3ij0"]
 
-[ext_resource type="Script" path="res://Scenes/ui_overlay.gd" id="1_tvpb2"]
+[ext_resource type="Script" path="res://Scenes/display_overlay.gd" id="1_7nh1d"]
+[ext_resource type="Script" path="res://Scenes/game_timer.gd" id="2_vqm8d"]
 
-[node name="UIOverlay" type="Node2D"]
-script = ExtResource("1_tvpb2")
+[node name="DisplayOverlay" type="Node2D"]
+script = ExtResource("1_7nh1d")
 
 [node name="NewGameButton" type="Button" parent="."]
 offset_left = 30.0
@@ -24,6 +25,15 @@ tooltip_text = "ctrl + z"
 focus_mode = 0
 theme_override_font_sizes/font_size = 29
 text = "Undo"
+
+[node name="GameTimer" type="Label" parent="."]
+offset_left = 40.0
+offset_top = 25.0
+offset_right = 259.0
+offset_bottom = 83.0
+theme_override_font_sizes/font_size = 36
+text = "Time: 00:00"
+script = ExtResource("2_vqm8d")
 
 [connection signal="pressed" from="NewGameButton" to="." method="_on_new_game_pressed"]
 [connection signal="pressed" from="UndoButton" to="." method="_on_undo_pressed"]

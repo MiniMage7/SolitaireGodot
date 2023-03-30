@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://drj0ib3u6wlk5"]
+[gd_scene load_steps=8 format=3 uid="uid://b3hoj7aotj0qn"]
 
 [ext_resource type="Script" path="res://Scenes/game_board.gd" id="1_4cbrx"]
 [ext_resource type="Texture2D" uid="uid://hv6jxhpl2did" path="res://assets/background.png" id="1_k3b1t"]
@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://bq3j17onjrxpt" path="res://Scenes/card.tscn" id="2_rtwy1"]
 [ext_resource type="PackedScene" path="res://Scenes/foundation_card_slot.tscn" id="3_oj1ct"]
 [ext_resource type="PackedScene" path="res://Scenes/deck.tscn" id="4_hlde7"]
-[ext_resource type="PackedScene" uid="uid://b5ga7j03s70ju" path="res://Scenes/ui_overlay.tscn" id="7_nnvo6"]
+[ext_resource type="PackedScene" uid="uid://br08c1qx3ij0" path="res://Scenes/display_overlay.tscn" id="7_nnvo6"]
 
 [node name="GameBoard" type="Node2D"]
 position = Vector2(-420, 0)
@@ -57,5 +57,5 @@ offset_top = 100.0
 offset_right = 590.0
 offset_bottom = 241.0
 
-[node name="UIOverlay" parent="." instance=ExtResource("7_nnvo6")]
+[node name="DisplayOverlay" parent="." instance=ExtResource("7_nnvo6")]
 position = Vector2(420, 0)

@@ -11,6 +11,7 @@ class Move:
 	var second_position
 	var card_was_flipped
 
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
@@ -64,6 +65,9 @@ func start_game():
 	
 	# Make an array to keep track of all the moves in the game
 	moves = []
+	
+	# Start game timer
+	$DisplayOverlay.get_node("GameTimer").reset_timer()
 
 
 # Creates a card based off a passed index
