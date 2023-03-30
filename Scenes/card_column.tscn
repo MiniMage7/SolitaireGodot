@@ -1,7 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://ch4i0h2vwdd5j"]
+[gd_scene load_steps=4 format=3]
 
 [ext_resource type="Texture2D" uid="uid://bsadj0k420k4o" path="res://assets/card_outline.png" id="1_1hd5e"]
-[ext_resource type="Script" path="res://card_column.gd" id="1_nxfdj"]
+[ext_resource type="Script" path="res://Scenes/card_column.gd" id="1_nxfdj"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_smy5g"]
 size = Vector2(140, 719)

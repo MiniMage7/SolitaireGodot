@@ -24,7 +24,8 @@ func _input(event):
 		get_tree().quit()
 	
 	elif event.is_action_pressed("New Game"):
-		_on_new_game_pressed()
+		reset_board()
+		start_game()
 	
 	elif event.is_action_pressed("Toggle Fullscreen"):
 		if DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_FULLSCREEN:
@@ -102,12 +103,6 @@ func reset_board():
 		get_node("FoundationCardSlot" + str(i)).reset_foundation()
 	
 	$Deck.reset_deck()
-
-
-# Called to clear the board and then start a new game
-func _on_new_game_pressed():
-	reset_board()
-	start_game()
 
 
 # Undo's moves in the game
