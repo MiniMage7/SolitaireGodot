@@ -148,6 +148,7 @@ func _on_input_event(_viewport, event, _shape_idx):
 			$CollisionShape2D.set_deferred("disabled", false)
 			
 			is_being_clicked = true
+			game_board.card_is_being_dragged = true
 		# Otherwise if the card is being released
 		elif is_being_clicked and !event.pressed:
 			on_card_release()
@@ -171,6 +172,7 @@ func _on_area_exited(area):
 # Called at the end of a drag or click
 func on_card_release():
 	is_being_clicked = false
+	game_board.card_is_being_dragged = false
 	
 	# Check if the card was over an area when released
 	if potential_new_parent == null:

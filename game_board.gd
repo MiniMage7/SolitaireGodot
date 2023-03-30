@@ -3,6 +3,7 @@ extends Node2D
 @export var card_scene: PackedScene
 
 var moves
+var card_is_being_dragged = false
 
 class Move:
 	var card
@@ -113,6 +114,9 @@ func _on_new_game_pressed():
 func undo():
 	# If there is no move to undo, do nothing
 	if moves.is_empty():
+		return
+	
+	if card_is_being_dragged:
 		return
 	
 	var move = moves.pop_back()
