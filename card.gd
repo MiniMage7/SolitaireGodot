@@ -131,7 +131,7 @@ func _on_input_event(_viewport, event, _shape_idx):
 	# If the event relates to a left mouse button push
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
 		# If its being pressed and there is no dragging yet
-		if !is_being_clicked and event.pressed:
+		if !is_being_clicked and event.pressed and !game_board.card_is_being_dragged:
 			# Call remove card on the card above it for every card being picked up
 			for i in child_card_count + 1:
 				get_parent().remove_card()
@@ -154,8 +154,10 @@ func _on_input_event(_viewport, event, _shape_idx):
 			on_card_release()
 	
 	# If the event is a right mouse button push
-	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_RIGHT and event.pressed and !is_being_clicked:
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_RIGHT and event.pressed and !game_board.card_is_being_dragged:
 		auto_move()
+		is_being_clicked = false
+		game_board.card_is_being_dragged = false
 
 
 # Store whatever card slot/column that the card last hovered over
@@ -249,6 +251,8 @@ func reset_cards():
 
 
 func auto_move():
+	is_being_clicked = true
+	game_board.card_is_being_dragged = true
 	# First check if the card can be moved to the foundation, and move it if it can
 	for i in range(1,5):
 		if game_board.get_node("FoundationCardSlot" + str(i)).check_card_validity(self):

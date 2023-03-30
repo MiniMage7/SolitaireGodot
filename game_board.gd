@@ -119,12 +119,15 @@ func undo():
 	if card_is_being_dragged:
 		return
 	
+	card_is_being_dragged = true
+	
 	var move = moves.pop_back()
 	
 	# The deck has different treatment of each part of the move
 	if move.card is String and move.card == "DeckFlip":
 		# First position holds how many cards were face up
 		$Deck.undo_deck_flip(move.first_position, move.second_position, move.card_was_flipped)
+		card_is_being_dragged = false
 		return
 	
 	for i in move.card.child_card_count + 1:
@@ -141,3 +144,5 @@ func undo():
 	
 	if move.card_was_flipped:
 		move.first_position.flip_bottom_card_back()
+	
+	card_is_being_dragged = false
