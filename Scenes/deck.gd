@@ -31,7 +31,7 @@ func flip3():
 	move.first_position = deck.duplicate()
 	move.second_position = flipped_deck.duplicate()
 	move.card_was_flipped = face_up_cards.duplicate()
-	get_parent().moves.append(move)
+	get_parent().add_move(move)
 	
 	# Hide any currently shown cards, disable their collision, and remove them from the shown card list
 	for i in range(face_up_card_count):
@@ -57,7 +57,7 @@ func flip3():
 		
 		# If the deck is empty, don't redo the texture and undo the move recording
 		if cards_in_deck == 0:
-			get_parent().moves.pop_back()
+			get_parent().add_move(move, true)
 			return
 		
 		# Change icon back to deck

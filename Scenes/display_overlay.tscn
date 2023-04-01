@@ -27,13 +27,21 @@ theme_override_font_sizes/font_size = 29
 text = "Undo"
 
 [node name="GameTimer" type="Label" parent="."]
-offset_left = 40.0
+offset_left = 65.0
 offset_top = 25.0
-offset_right = 259.0
+offset_right = 285.0
 offset_bottom = 83.0
 theme_override_font_sizes/font_size = 36
 text = "Time: 00:00"
 script = ExtResource("2_vqm8d")
+
+[node name="MoveCounter" type="Label" parent="."]
+offset_left = 485.0
+offset_top = 25.0
+offset_right = 685.0
+offset_bottom = 83.0
+theme_override_font_sizes/font_size = 36
+text = "Moves: 0"
 
 [connection signal="pressed" from="NewGameButton" to="." method="_on_new_game_pressed"]
 [connection signal="pressed" from="UndoButton" to="." method="_on_undo_pressed"]

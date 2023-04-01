@@ -68,6 +68,9 @@ func start_game():
 	
 	# Start game timer
 	$DisplayOverlay.get_node("GameTimer").reset_timer()
+	
+	# Reset move count
+	$DisplayOverlay.reset_moves()
 
 
 # Creates a card based off a passed index
@@ -135,7 +138,7 @@ func undo():
 	move.card.get_parent().remove_child(move.card)
 	move.first_position.add_card(move.card)
 	
-	# Necessary because cards moved from the deck have a different name
+	# Necessary because cards moved from the deck sometimes have a different name
 	move.card.name = "card"
 	
 	move.first_position.change_click_detections()
@@ -145,3 +148,12 @@ func undo():
 		move.first_position.flip_bottom_card_back()
 	
 	card_is_being_dragged = false
+
+
+func add_move(move, remove_move = false):
+	if remove_move:
+		moves.pop_back()
+		$DisplayOverlay.remove_move()
+	else:
+		moves.append(move)
+		$DisplayOverlay.add_move()

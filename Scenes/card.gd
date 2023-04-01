@@ -206,7 +206,7 @@ func on_card_release():
 		move.first_position = old_parent
 		move.second_position = potential_new_parent
 		move.card_was_flipped = card_was_flipped
-		game_board.moves.append(move)
+		game_board.add_move(move)
 
 
 # Called when a card is removed from a card's column
